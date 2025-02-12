@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Robot, MessageSquare, Sparkles, Target } from "lucide-react";
+import { Bot, MessageSquare, Sparkles, Target } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -31,7 +31,7 @@ export const AIMentor = () => {
     <Card className="p-6 rounded-lg bg-white/5 border border-white/10">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Robot className="h-6 w-6 text-primary" />
+          <Bot className="h-6 w-6 text-primary" />
           <span>AI Mentor</span>
         </CardTitle>
       </CardHeader>

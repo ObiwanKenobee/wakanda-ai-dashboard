@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trophy, Coin, Medal, Gift } from "lucide-react";
+import { Trophy, Coins, Medal, Gift } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 
@@ -27,7 +27,7 @@ export const GamificationHub = () => {
         <div className="space-y-6">
           <div className="flex items-center justify-between p-4 rounded-lg bg-white/5">
             <div className="flex items-center gap-3">
-              <Coin className="h-8 w-8 text-yellow-500" />
+              <Coins className="h-8 w-8 text-yellow-500" />
               <div>
                 <p className="font-medium">SHURI Tokens</p>
                 <p className="text-sm text-muted-foreground">Current Balance</p>
