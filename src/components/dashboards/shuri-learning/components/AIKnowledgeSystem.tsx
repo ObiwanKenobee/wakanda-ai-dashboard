@@ -101,7 +101,7 @@ export const AIKnowledgeSystem = () => {
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Brain className="h-6 w-6 text-primary" />
-            <span>AI Knowledge System</span>
+            AI Knowledge System
           </div>
           <Badge variant="secondary" className="text-xs">
             Beta
