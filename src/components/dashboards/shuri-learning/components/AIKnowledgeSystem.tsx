@@ -122,13 +122,15 @@ export const AIKnowledgeSystem = () => {
           </div>
 
           <div className="flex gap-4">
-            <Input
-              placeholder="Search learning paths..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1"
-              prefix={<Search className="h-4 w-4 text-muted-foreground" />}
-            />
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search learning paths..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9"
+              />
+            </div>
             <Input
               placeholder="New path title..."
               value={newPath.title}
