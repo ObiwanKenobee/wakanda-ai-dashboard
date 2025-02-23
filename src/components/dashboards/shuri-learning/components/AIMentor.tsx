@@ -2,16 +2,42 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bot, MessageSquare, Sparkles, Target } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Bot, MessageSquare, Sparkles, Target, Trash2, Send } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
+interface Message {
+  id: number;
+  question: string;
+  answer: string;
+  timestamp: string;
+  topic: string;
+}
+
 export const AIMentor = () => {
-  const [question, setQuestion] = useState("");
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 1,
+      question: "How do blockchain consensus mechanisms work?",
+      answer: "Consensus mechanisms are protocols that enable network participants to agree on the valid state of the blockchain...",
+      timestamp: "2024-03-15 10:30",
+      topic: "Blockchain"
+    },
+    {
+      id: 2,
+      question: "What are the key ESG metrics for sustainable investing?",
+      answer: "Key ESG metrics include carbon emissions, water usage, board diversity, and corporate governance structures...",
+      timestamp: "2024-03-15 11:15",
+      topic: "ESG"
+    }
+  ]);
+  const [newQuestion, setNewQuestion] = useState({ text: "", topic: "" });
   const { toast } = useToast();
 
   const handleAskQuestion = () => {
-    if (!question.trim()) {
+    if (!newQuestion.text.trim()) {
       toast({
         title: "Error",
         description: "Please enter a question",
@@ -20,11 +46,37 @@ export const AIMentor = () => {
       return;
     }
 
+    const message: Message = {
+      id: messages.length + 1,
+      question: newQuestion.text,
+      answer: "Processing your question...",
+      timestamp: new Date().toLocaleString(),
+      topic: newQuestion.topic || "General"
+    };
+
+    setMessages([message, ...messages]);
+    setNewQuestion({ text: "", topic: "" });
+    
+    // Simulate AI response
+    setTimeout(() => {
+      setMessages(prev => prev.map(m =>
+        m.id === message.id
+          ? { ...m, answer: "Here's a detailed explanation based on the latest research and best practices..." }
+          : m
+      ));
+      toast({
+        title: "Answer Ready",
+        description: "Your AI mentor has responded to your question",
+      });
+    }, 2000);
+  };
+
+  const handleDeleteMessage = (id: number) => {
+    setMessages(messages.filter(m => m.id !== id));
     toast({
-      title: "Question Received",
-      description: "Your AI mentor is analyzing your question...",
+      title: "Message Deleted",
+      description: "Conversation entry has been removed",
     });
-    setQuestion("");
   };
 
   return (
@@ -55,30 +107,59 @@ export const AIMentor = () => {
 
           <div className="space-y-4">
             <h4 className="font-medium">Ask Your AI Mentor</h4>
-            <div className="flex gap-2">
-              <Input
+            <div className="space-y-4">
+              <Textarea
                 placeholder="Type your question..."
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                className="flex-1"
+                value={newQuestion.text}
+                onChange={(e) => setNewQuestion({ ...newQuestion, text: e.target.value })}
+                className="min-h-[100px]"
               />
-              <Button onClick={handleAskQuestion}>Ask</Button>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Topic (optional)"
+                  value={newQuestion.topic}
+                  onChange={(e) => setNewQuestion({ ...newQuestion, topic: e.target.value })}
+                />
+                <Button onClick={handleAskQuestion}>
+                  <Send className="h-4 w-4 mr-2" />
+                  Ask
+                </Button>
+              </div>
             </div>
           </div>
 
           <div className="space-y-2">
-            <h4 className="font-medium">Suggested Topics</h4>
-            <div className="grid gap-2">
-              {[
-                "ESG Investment Strategies",
-                "Web3 Development Best Practices",
-                "Sustainable Technology Trends",
-              ].map((topic) => (
-                <div key={topic} className="p-3 rounded-lg bg-white/5 hover:bg-white/10 cursor-pointer transition-colors">
-                  {topic}
-                </div>
-              ))}
-            </div>
+            <h4 className="font-medium">Conversation History</h4>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Topic</TableHead>
+                  <TableHead>Question</TableHead>
+                  <TableHead>Answer</TableHead>
+                  <TableHead>Time</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {messages.map((message) => (
+                  <TableRow key={message.id}>
+                    <TableCell>{message.topic}</TableCell>
+                    <TableCell className="max-w-[200px] truncate">{message.question}</TableCell>
+                    <TableCell className="max-w-[300px] truncate">{message.answer}</TableCell>
+                    <TableCell>{message.timestamp}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleDeleteMessage(message.id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </div>
       </CardContent>
