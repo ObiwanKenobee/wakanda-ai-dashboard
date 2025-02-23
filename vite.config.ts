@@ -11,12 +11,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' && componentTagger({
-      // Enable latest features
-      enableLogging: true,
-      enableHotReload: true,
-      enableTypeChecking: true,
-    }),
+    mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -25,7 +20,6 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     sourcemap: true,
-    // Enable latest build optimizations
     target: 'esnext',
     minify: 'esbuild',
   },
