@@ -1143,6 +1143,39 @@ export type Database = {
         }
         Relationships: []
       }
+      strategic_initiatives: {
+        Row: {
+          created_at: string
+          id: number
+          impact: number | null
+          name: string
+          progress: number | null
+          status: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          impact?: number | null
+          name: string
+          progress?: number | null
+          status?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          impact?: number | null
+          name?: string
+          progress?: number | null
+          status?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       supply_chain_nodes: {
         Row: {
           capacity: number | null
