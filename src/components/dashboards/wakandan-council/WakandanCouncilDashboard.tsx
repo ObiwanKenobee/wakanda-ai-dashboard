@@ -1,27 +1,14 @@
 
 import { Card } from "@/components/ui/card";
-import { 
-  ChartBar, 
-  LineChart, 
-  Shield, 
-  Vote
-} from "lucide-react";
-import { 
-  ESGScorecard 
-} from "./components/ESGScorecard";
-import { 
-  GovernanceFeed 
-} from "./components/GovernanceFeed";
-import { 
-  ComplianceReports 
-} from "./components/ComplianceReports";
-import { 
-  DataVisualization 
-} from "./components/DataVisualization";
+import { ChartBar, LineChart, Shield, Vote } from "lucide-react";
+import { ESGScorecard } from "./components/ESGScorecard";
+import { GovernanceFeed } from "./components/GovernanceFeed";
+import { ComplianceReports } from "./components/ComplianceReports";
+import { DataVisualization } from "./components/DataVisualization";
 
 export const WakandanCouncilDashboard = () => {
   return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 bg-background">
+    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       <div className="flex items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight text-gradient">AI Wakandan Council Dashboard</h2>
       </div>
@@ -56,22 +43,14 @@ export const WakandanCouncilDashboard = () => {
         </Card>
       </div>
       
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4 glass-panel">
-          <ESGScorecard />
-        </Card>
-        <Card className="col-span-3 glass-panel">
-          <GovernanceFeed />
-        </Card>
+      <div className="grid gap-4 md:grid-cols-2">
+        <ESGScorecard />
+        <GovernanceFeed />
       </div>
       
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-3 glass-panel">
-          <ComplianceReports />
-        </Card>
-        <Card className="col-span-4 glass-panel">
-          <DataVisualization />
-        </Card>
+      <div className="grid gap-4 md:grid-cols-2">
+        <ComplianceReports />
+        <DataVisualization />
       </div>
     </div>
   );

@@ -1,169 +1,144 @@
 
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { PlusCircle, Pencil, Trash2, FileText } from "lucide-react";
-import { toast } from "sonner";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { FileText, Edit2, Trash2, Plus } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface Report {
   id: number;
   title: string;
   content: string;
   date: string;
+  status: 'Compliant' | 'Non-Compliant' | 'Under Review';
 }
 
 export const ComplianceReports = () => {
   const [reports, setReports] = useState<Report[]>([
-    { id: 1, title: 'Q1 Compliance Review', content: 'Detailed analysis of Q1 compliance metrics', date: '2024-01-15' },
-    { id: 2, title: 'ESG Standards Update', content: 'Updates to environmental standards', date: '2024-02-15' },
-    { id: 3, title: 'Governance Audit', content: 'Annual governance structure audit', date: '2024-03-15' },
+    {
+      id: 1,
+      title: "Q1 ESG Compliance",
+      content: "Quarterly review of ESG metrics and compliance status",
+      date: "2024-03-15",
+      status: "Compliant"
+    },
+    {
+      id: 2,
+      title: "Carbon Footprint Assessment",
+      content: "Annual carbon emissions and reduction strategies",
+      date: "2024-03-10",
+      status: "Under Review"
+    }
   ]);
-  const [isAdding, setIsAdding] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
   const [newReport, setNewReport] = useState({ title: '', content: '' });
+  const { toast } = useToast();
 
-  const handleAdd = () => {
+  const handleAddReport = () => {
     if (!newReport.title || !newReport.content) {
-      toast.error("Please fill in all fields");
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all fields",
+        variant: "destructive",
+      });
       return;
     }
-    
-    const report = {
-      id: Math.max(0, ...reports.map(r => r.id)) + 1,
-      ...newReport,
-      date: new Date().toISOString().split('T')[0]
+
+    const report: Report = {
+      id: reports.length + 1,
+      title: newReport.title,
+      content: newReport.content,
+      date: new Date().toISOString().split('T')[0],
+      status: 'Under Review'
     };
-    
+
     setReports([...reports, report]);
     setNewReport({ title: '', content: '' });
-    setIsAdding(false);
-    toast.success("Report added successfully");
+    toast({
+      title: "Success",
+      description: "New compliance report added",
+    });
   };
 
-  const handleEdit = (id: number) => {
-    const report = reports.find(r => r.id === id);
-    if (report) {
-      setNewReport({ title: report.title, content: report.content });
-      setEditingId(id);
-    }
-  };
-
-  const handleUpdate = () => {
-    if (!newReport.title || !newReport.content) {
-      toast.error("Please fill in all fields");
-      return;
-    }
-    
-    setReports(reports.map(r => 
-      r.id === editingId 
-        ? { ...r, title: newReport.title, content: newReport.content }
-        : r
-    ));
-    setNewReport({ title: '', content: '' });
-    setEditingId(null);
-    toast.success("Report updated successfully");
-  };
-
-  const handleDelete = (id: number) => {
+  const handleDeleteReport = (id: number) => {
     setReports(reports.filter(r => r.id !== id));
-    toast.success("Report deleted successfully");
-  };
-
-  const handleView = (report: Report) => {
-    toast(report.title, {
-      description: report.content,
-      duration: 5000,
+    toast({
+      title: "Deleted",
+      description: "Report has been removed",
     });
   };
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold">Compliance Reports</h3>
-        <Button 
-          onClick={() => setIsAdding(!isAdding)} 
-          variant="outline" 
-          size="sm"
-          className="text-primary"
-        >
-          <PlusCircle className="h-4 w-4 mr-2" />
-          New Report
-        </Button>
-      </div>
-
-      {(isAdding || editingId !== null) && (
-        <div className="mb-4 space-y-4 p-4 rounded-lg bg-white/5">
-          <Input
-            placeholder="Report Title"
-            value={newReport.title}
-            onChange={(e) => setNewReport({ ...newReport, title: e.target.value })}
-            className="bg-background"
-          />
-          <Textarea
-            placeholder="Report Content"
-            value={newReport.content}
-            onChange={(e) => setNewReport({ ...newReport, content: e.target.value })}
-            className="bg-background"
-          />
-          <div className="flex space-x-2">
-            <Button 
-              onClick={editingId !== null ? handleUpdate : handleAdd}
-              variant="default"
-              size="sm"
-            >
-              {editingId !== null ? 'Update' : 'Add'} Report
-            </Button>
-            <Button 
-              onClick={() => {
-                setIsAdding(false);
-                setEditingId(null);
-                setNewReport({ title: '', content: '' });
-              }}
-              variant="outline"
-              size="sm"
-            >
-              Cancel
-            </Button>
+    <Card className="p-6">
+      <CardHeader>
+        <CardTitle className="text-xl font-semibold">Compliance Reports</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-6">
+          <div className="space-y-4">
+            <h4 className="font-medium">Add New Report</h4>
+            <div className="space-y-4">
+              <Input
+                placeholder="Report Title"
+                value={newReport.title}
+                onChange={(e) => setNewReport({ ...newReport, title: e.target.value })}
+              />
+              <Textarea
+                placeholder="Report Content"
+                value={newReport.content}
+                onChange={(e) => setNewReport({ ...newReport, content: e.target.value })}
+              />
+              <Button onClick={handleAddReport}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add Report
+              </Button>
+            </div>
           </div>
+
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Title</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {reports.map((report) => (
+                <TableRow key={report.id}>
+                  <TableCell>{report.title}</TableCell>
+                  <TableCell>{report.date}</TableCell>
+                  <TableCell>
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      report.status === 'Compliant' ? 'bg-green-500/20 text-green-400' :
+                      report.status === 'Non-Compliant' ? 'bg-red-500/20 text-red-400' :
+                      'bg-yellow-500/20 text-yellow-400'
+                    }`}>
+                      {report.status}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button variant="ghost" size="icon">
+                        <FileText className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon">
+                        <Edit2 className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => handleDeleteReport(report.id)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
-      )}
-
-      <div className="space-y-4">
-        {reports.map((report) => (
-          <div key={report.id} className="flex items-center justify-between p-4 rounded-lg bg-white/5">
-            <div className="flex-1">
-              <p className="text-sm font-medium">{report.title}</p>
-              <p className="text-sm text-muted-foreground">
-                Verified on: {report.date}
-              </p>
-            </div>
-            <div className="flex space-x-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => handleView(report)}
-              >
-                <FileText className="h-4 w-4 text-primary" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => handleEdit(report.id)}
-              >
-                <Pencil className="h-4 w-4 text-primary" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => handleDelete(report.id)}
-              >
-                <Trash2 className="h-4 w-4 text-destructive" />
-              </Button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
