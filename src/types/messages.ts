@@ -1,7 +1,8 @@
 
 import { Database } from '@/integrations/supabase/types';
 
-export interface Message {
+// Define the base message type from the database
+type DatabaseMessage = {
   id: string;
   content: string;
   attachment_url: string;
@@ -11,6 +12,8 @@ export interface Message {
   read: boolean;
   section: 'index' | 'wakandan-council' | 'bast-investment' | 'shuri-learning';
 }
+
+export type Message = DatabaseMessage;
 
 export type CreateMessageDTO = Omit<Message, 'id' | 'created_at'>;
 export type UpdateMessageDTO = Partial<Omit<Message, 'id' | 'created_at'>>;
