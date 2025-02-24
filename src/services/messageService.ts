@@ -3,21 +3,18 @@ import { supabase } from '@/lib/supabase';
 import { Message, CreateMessageDTO, UpdateMessageDTO } from '@/types/messages';
 
 export const messageService = {
-  // Get all messages for a specific section
   async getMessages(section: Message['section']): Promise<Message[]> {
     const { data, error } = await supabase
       .from('messages')
       .select('*')
       .eq('section', section)
-      .eq('status', 'active')
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    return data || [];
+    return (data as Message[]) || [];
   },
 
-  // Get a single message by ID
-  async getMessage(id: number): Promise<Message | null> {
+  async getMessage(id: string): Promise<Message | null> {
     const { data, error } = await supabase
       .from('messages')
       .select('*')
@@ -25,10 +22,9 @@ export const messageService = {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as Message;
   },
 
-  // Create a new message
   async createMessage(message: CreateMessageDTO): Promise<Message> {
     const { data, error } = await supabase
       .from('messages')
@@ -37,11 +33,10 @@ export const messageService = {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as Message;
   },
 
-  // Update an existing message
-  async updateMessage(id: number, message: UpdateMessageDTO): Promise<Message> {
+  async updateMessage(id: string, message: UpdateMessageDTO): Promise<Message> {
     const { data, error } = await supabase
       .from('messages')
       .update(message)
@@ -50,24 +45,13 @@ export const messageService = {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as Message;
   },
 
-  // Delete a message (soft delete)
-  async deleteMessage(id: number): Promise<void> {
+  async deleteMessage(id: string): Promise<void> {
     const { error } = await supabase
       .from('messages')
-      .update({ status: 'deleted' })
-      .eq('id', id);
-
-    if (error) throw error;
-  },
-
-  // Archive a message
-  async archiveMessage(id: number): Promise<void> {
-    const { error } = await supabase
-      .from('messages')
-      .update({ status: 'archived' })
+      .delete()
       .eq('id', id);
 
     if (error) throw error;

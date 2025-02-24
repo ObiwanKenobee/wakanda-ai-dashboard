@@ -10,5 +10,12 @@ export interface Initiative {
   user_id: string;
 }
 
-export type CreateInitiativeDTO = Omit<Initiative, 'id' | 'created_at' | 'updated_at' | 'user_id'>;
-export type UpdateInitiativeDTO = Partial<CreateInitiativeDTO>;
+export type CreateInitiativeDTO = {
+  name: string;
+  progress: number;
+  status: 'Active' | 'Pending' | 'Completed';
+  impact: number;
+  user_id: string;
+};
+
+export type UpdateInitiativeDTO = Partial<Omit<CreateInitiativeDTO, 'user_id'>>;

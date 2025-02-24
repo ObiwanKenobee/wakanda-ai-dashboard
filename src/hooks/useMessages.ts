@@ -34,7 +34,7 @@ export function useMessages(section: Message['section']) {
   });
 
   const updateMessage = useMutation({
-    mutationFn: ({ id, message }: { id: number; message: UpdateMessageDTO }) =>
+    mutationFn: ({ id, message }: { id: string; message: UpdateMessageDTO }) =>
       messageService.updateMessage(id, message),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey });
@@ -54,7 +54,7 @@ export function useMessages(section: Message['section']) {
   });
 
   const deleteMessage = useMutation({
-    mutationFn: (id: number) => messageService.deleteMessage(id),
+    mutationFn: (id: string) => messageService.deleteMessage(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey });
       toast({
@@ -72,25 +72,6 @@ export function useMessages(section: Message['section']) {
     },
   });
 
-  const archiveMessage = useMutation({
-    mutationFn: (id: number) => messageService.archiveMessage(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey });
-      toast({
-        title: "Success",
-        description: "Message archived successfully",
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: "Failed to archive message",
-        variant: "destructive",
-      });
-      console.error('Archive message error:', error);
-    },
-  });
-
   return {
     messages,
     isLoading,
@@ -98,6 +79,5 @@ export function useMessages(section: Message['section']) {
     createMessage,
     updateMessage,
     deleteMessage,
-    archiveMessage,
   };
 }
