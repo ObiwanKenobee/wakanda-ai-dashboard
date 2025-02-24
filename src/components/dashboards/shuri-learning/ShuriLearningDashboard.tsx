@@ -8,12 +8,12 @@ import { AIMentor } from './components/AIMentor';
 
 export const ShuriLearningDashboard = () => {
   return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-      <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight text-gradient">Shuri Learning Hub</h2>
+    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 max-w-[1600px] mx-auto">
+      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gradient">Shuri Learning Hub</h2>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="p-4 glass-panel">
           <div className="flex items-center space-x-2">
             <Brain className="h-4 w-4 text-primary" />
@@ -44,12 +44,12 @@ export const ShuriLearningDashboard = () => {
         </Card>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
         <AIKnowledgeSystem />
         <GamificationHub />
       </div>
       
-      <div className="grid gap-4">
+      <div className="grid gap-4 grid-cols-1">
         <AIMentor />
       </div>
     </div>

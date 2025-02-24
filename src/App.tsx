@@ -22,7 +22,7 @@ const NavigationHeader = () => (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-16">
         <Link to="/" className="text-primary font-bold text-xl">Guardian-IO</Link>
-        <div className="flex space-x-4">
+        <div className="hidden md:flex space-x-4">
           <Link 
             to="/wakandan-council" 
             className="text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
@@ -42,6 +42,10 @@ const NavigationHeader = () => (
             Shuri Learning
           </Link>
         </div>
+        <button className="md:hidden p-2 rounded-md text-gray-300 hover:text-primary hover:bg-white/5">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+          </button>
       </div>
     </div>
   </motion.nav>
