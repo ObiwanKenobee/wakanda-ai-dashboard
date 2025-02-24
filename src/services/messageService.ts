@@ -1,43 +1,44 @@
 
 import { supabase } from '@/lib/supabase';
 import { Message, CreateMessageDTO, UpdateMessageDTO } from '@/types/messages';
+import { PostgrestResponse } from '@supabase/supabase-js';
 
 export const messageService = {
   async getMessages(section: Message['section']): Promise<Message[]> {
-    const { data, error } = await supabase
+    const { data, error }: PostgrestResponse<Message> = await supabase
       .from('messages')
       .select('*')
       .eq('section', section)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    return (data as Message[]) || [];
+    return data || [];
   },
 
   async getMessage(id: string): Promise<Message | null> {
-    const { data, error } = await supabase
+    const { data, error }: PostgrestResponse<Message> = await supabase
       .from('messages')
       .select('*')
       .eq('id', id)
       .single();
 
     if (error) throw error;
-    return data as Message;
+    return data;
   },
 
   async createMessage(message: CreateMessageDTO): Promise<Message> {
-    const { data, error } = await supabase
+    const { data, error }: PostgrestResponse<Message> = await supabase
       .from('messages')
       .insert([message])
       .select()
       .single();
 
     if (error) throw error;
-    return data as Message;
+    return data;
   },
 
   async updateMessage(id: string, message: UpdateMessageDTO): Promise<Message> {
-    const { data, error } = await supabase
+    const { data, error }: PostgrestResponse<Message> = await supabase
       .from('messages')
       .update(message)
       .eq('id', id)
@@ -45,7 +46,7 @@ export const messageService = {
       .single();
 
     if (error) throw error;
-    return data as Message;
+    return data;
   },
 
   async deleteMessage(id: string): Promise<void> {
