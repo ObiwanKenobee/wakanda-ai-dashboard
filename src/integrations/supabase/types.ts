@@ -588,6 +588,102 @@ export type Database = {
         }
         Relationships: []
       }
+      ethical_impact_metrics: {
+        Row: {
+          category: string
+          change_percentage: number | null
+          comparison_period: string | null
+          created_at: string | null
+          id: string
+          measurement_date: string | null
+          metric_name: string
+          metric_target: number | null
+          metric_value: number
+          notes: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          category: string
+          change_percentage?: number | null
+          comparison_period?: string | null
+          created_at?: string | null
+          id?: string
+          measurement_date?: string | null
+          metric_name: string
+          metric_target?: number | null
+          metric_value: number
+          notes?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          category?: string
+          change_percentage?: number | null
+          comparison_period?: string | null
+          created_at?: string | null
+          id?: string
+          measurement_date?: string | null
+          metric_name?: string
+          metric_target?: number | null
+          metric_value?: number
+          notes?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ethical_sourcing_initiatives: {
+        Row: {
+          budget: number | null
+          category: string
+          created_at: string | null
+          current_metrics: Json | null
+          description: string | null
+          end_date: string | null
+          id: string
+          impact_level: Database["public"]["Enums"]["impact_level"] | null
+          start_date: string | null
+          status: Database["public"]["Enums"]["initiative_status"] | null
+          target_metrics: Json | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          budget?: number | null
+          category: string
+          created_at?: string | null
+          current_metrics?: Json | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          impact_level?: Database["public"]["Enums"]["impact_level"] | null
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["initiative_status"] | null
+          target_metrics?: Json | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          budget?: number | null
+          category?: string
+          created_at?: string | null
+          current_metrics?: Json | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          impact_level?: Database["public"]["Enums"]["impact_level"] | null
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["initiative_status"] | null
+          target_metrics?: Json | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       forum_posts: {
         Row: {
           author_id: string
@@ -1172,6 +1268,51 @@ export type Database = {
           progress?: number | null
           status?: string | null
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      supplier_assessments: {
+        Row: {
+          certification_details: Json | null
+          compliance_score: number | null
+          contact_information: Json | null
+          created_at: string | null
+          id: string
+          last_audit_date: string | null
+          next_audit_date: string | null
+          risk_areas: string[] | null
+          status: Database["public"]["Enums"]["supplier_status"] | null
+          supplier_name: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          certification_details?: Json | null
+          compliance_score?: number | null
+          contact_information?: Json | null
+          created_at?: string | null
+          id?: string
+          last_audit_date?: string | null
+          next_audit_date?: string | null
+          risk_areas?: string[] | null
+          status?: Database["public"]["Enums"]["supplier_status"] | null
+          supplier_name: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          certification_details?: Json | null
+          compliance_score?: number | null
+          contact_information?: Json | null
+          created_at?: string | null
+          id?: string
+          last_audit_date?: string | null
+          next_audit_date?: string | null
+          risk_areas?: string[] | null
+          status?: Database["public"]["Enums"]["supplier_status"] | null
+          supplier_name?: string
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: []
@@ -4571,6 +4712,7 @@ export type Database = {
       engagement_status: "planned" | "completed" | "requires_follow_up"
       esg_category: "environmental" | "social" | "governance"
       esg_status: "on_track" | "at_risk" | "off_track"
+      impact_level: "low" | "medium" | "high" | "very_high"
       industry_type:
         | "manufacturing"
         | "retail"
@@ -4598,6 +4740,7 @@ export type Database = {
       policy_status: "draft" | "under_review" | "active" | "archived"
       report_status: "draft" | "under_review" | "published"
       risk_level: "high" | "medium" | "low"
+      supplier_status: "pending" | "approved" | "at_risk" | "suspended"
       task_status: "todo" | "in_progress" | "done"
       user_role:
         | "Supply Chain Manager"
