@@ -6,12 +6,26 @@ import { ESGMarketInsights } from './components/ESGMarketInsights';
 import { AIPortfolioManagement } from './components/AIPortfolioManagement';
 import { TradingBots } from './components/TradingBots';
 import { StakingYield } from './components/StakingYield';
+import { Link } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
 
 export const BastInvestmentDashboard = () => {
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 max-w-[1600px] mx-auto">
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gradient">Bast Investment Suite</h2>
+        <div className="flex flex-wrap gap-2">
+          <Link to="/shuri-learning">
+            <Button variant="outline" size="sm" className="text-xs">
+              Learn Trading
+            </Button>
+          </Link>
+          <Link to="/wakandan-council">
+            <Button variant="outline" size="sm" className="text-xs">
+              View Compliance
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">

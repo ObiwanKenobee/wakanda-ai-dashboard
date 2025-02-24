@@ -5,13 +5,28 @@ import { ESGScorecard } from "./components/ESGScorecard";
 import { GovernanceFeed } from "./components/GovernanceFeed";
 import { ComplianceReports } from "./components/ComplianceReports";
 import { DataVisualization } from "./components/DataVisualization";
+import { Link } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
 
 export const WakandanCouncilDashboard = () => {
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 max-w-[1600px] mx-auto">
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gradient">AI Wakandan Council Dashboard</h2>
+        <div className="flex flex-wrap gap-2">
+          <Link to="/shuri-learning">
+            <Button variant="outline" size="sm" className="text-xs">
+              Learn Governance
+            </Button>
+          </Link>
+          <Link to="/bast-investment">
+            <Button variant="outline" size="sm" className="text-xs">
+              View Investments
+            </Button>
+          </Link>
+        </div>
       </div>
+
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="p-4 glass-panel">
           <div className="flex items-center space-x-2">
