@@ -1,7 +1,6 @@
 
 import { Database } from '@/integrations/supabase/types';
 
-// Define the base message type from the database
 export interface Message {
   id: string;
   content: string;

@@ -1,11 +1,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { Message, CreateMessageDTO, UpdateMessageDTO } from '@/types/messages';
-import { PostgrestSingleResponse, PostgrestResponse, PostgrestError } from '@supabase/supabase-js';
-
-type DbResult<T> = T extends PromiseLike<infer U> ? U : never;
-type DbResultOk<T> = DbResult<T> extends { data: infer U } ? U : never;
-type MessageRow = DbResultOk<ReturnType<typeof supabase.from<'messages'>>>;
+import { PostgrestError } from '@supabase/supabase-js';
 
 export const messageService = {
   async getMessages(section: Message['section']): Promise<Message[]> {
